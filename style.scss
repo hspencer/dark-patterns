@@ -101,3 +101,30 @@ h2 {
         }
     }
 }
+
+footer{
+    padding: 2em;
+    font-family: "Barlow", sans-serif;
+    font-weight: 800;
+    text-transform: uppercase;
+    nav{
+        display: flex;
+        flex-flow:row;
+        justify-content: space-between;
+
+        li{
+            display: inline;
+            a{
+                display: inline-block;
+                text-decoration: none;
+                padding: 1ex 2ex;
+                border-radius: 2ex;
+                background-color: #0005;
+                color: white;
+                &:hover{
+                    background-color: black;
+                }
+            }
+        }
+    }
+}

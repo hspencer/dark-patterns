@@ -89,4 +89,30 @@ h2 {
 }
 .caso:hover .overlay {
   transform: translateY(-50%);
+}
+
+footer {
+  padding: 2em;
+  font-family: "Barlow", sans-serif;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+footer nav {
+  display: flex;
+  flex-flow: row;
+  justify-content: space-between;
+}
+footer nav li {
+  display: inline;
+}
+footer nav li a {
+  display: inline-block;
+  text-decoration: none;
+  padding: 1ex 2ex;
+  border-radius: 2ex;
+  background-color: rgba(0, 0, 0, 0.3333333333);
+  color: white;
+}
+footer nav li a:hover {
+  background-color: black;
 }/*# sourceMappingURL=style.css.map */
