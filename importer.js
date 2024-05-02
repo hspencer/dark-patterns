@@ -45,7 +45,7 @@ function constructObjects() {
       let desc =
         caso.printouts["Descripción"] && caso.printouts["Descripción"].length > 0
           ? caso.printouts["Descripción"].join(", ")
-          : "No hay una descripción disponible";
+          : "No hay una descripción disponible ingresada en el formulario";
   
       let img =
         caso.printouts["ImgPath"] &&
@@ -66,6 +66,9 @@ function constructObjects() {
   
       // agrego la asignatura (temporal) al arreglo de asignaturas
       casos.push(casoNuevo);
+
+      // lo registra en la consola para revisarlo con el inspector
+      console.log(casoNuevo); 
   
       // le digo que la despliegue
       casoNuevo.display();

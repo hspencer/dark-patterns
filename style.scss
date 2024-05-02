@@ -69,23 +69,23 @@ h2 {
         justify-content: flex-end; // Coloca el título al final del overlay
         transition: transform 0.5s;
         transform: translateY(0); // Ajustar para mostrar sólo el título
-  
+        color: white;
+        text-shadow: 1px 1px 2px #0006;
 
         h4 {
-            position: relative;
-            font-size: 1em;
+            position: absolute;
+            font-size: 1.5em;
             font-weight: 700;
             text-transform: uppercase;
-            color: white;
-            margin: 0;
-            padding-bottom: 1em; // Espacio desde el fondo
+            bottom: 1em;
+            width: calc(100% - 2em);
         }
-
         .desc {
+            font-size: 1.2em;
             font-weight: 400;
-            color: white;
             transform: translateY(100%);
             transition: transform 0.5s;
+            width: calc(100% - 2em);
         }
     }
 
@@ -97,7 +97,7 @@ h2 {
         }
 
         .overlay {
-            transform: translateY(-100%); // Mover el overlay para mostrar la descripción
+            transform: translateY(-50%); // Mover el overlay para mostrar la descripción
         }
     }
 }

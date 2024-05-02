@@ -65,26 +65,28 @@ h2 {
   justify-content: flex-end;
   transition: transform 0.5s;
   transform: translateY(0);
+  color: white;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.4);
 }
 .caso .overlay h4 {
-  position: relative;
-  font-size: 1em;
+  position: absolute;
+  font-size: 1.5em;
   font-weight: 700;
   text-transform: uppercase;
-  color: white;
-  margin: 0;
-  padding-bottom: 1em;
+  bottom: 1em;
+  width: calc(100% - 2em);
 }
 .caso .overlay .desc {
+  font-size: 1.2em;
   font-weight: 400;
-  color: white;
   transform: translateY(100%);
   transition: transform 0.5s;
+  width: calc(100% - 2em);
 }
 .caso:hover img {
   transform: scale(1.2);
   filter: brightness(50%);
 }
 .caso:hover .overlay {
-  transform: translateY(-100%);
+  transform: translateY(-50%);
 }/*# sourceMappingURL=style.css.map */
