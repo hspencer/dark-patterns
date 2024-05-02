@@ -93,8 +93,9 @@ class Caso {
             "<h4>"+this.name+"</h4>"+
             "<div class='desc'>"+this.desc+"</div></div></a>"
         );
-
+        // se le asigna la clase 'caso' al elemento contenedor
         casoContainer.class('caso')
+        // define la ubicación en el documento html
         casoContainer.parent('main');
     }
 }
