@@ -11,7 +11,7 @@ Cascada de Estilos
 
 body {
     margin: 1em auto;
-    background-color: rgb(223, 218, 211);
+    background-color: rgb(248, 127, 6);
     width: calc(100% - 2em);
     max-width: 900px;
 }
@@ -99,6 +99,45 @@ h2 {
         .overlay {
             transform: translateY(-50%); // Mover el overlay para mostrar la descripción
         }
+    }
+}
+
+.single{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 1em;
+
+    img{
+        width: 100%;
+        height: auto;
+        margin: 1em 0;
+        border-radius: 2ex;
+    }
+
+    .desc{
+        margin: 1em 0;
+        font-size: 1.2em;
+        color: #0009;
+        font-family: Barlow;
+    }
+}
+
+#nav{
+    position: absolute;
+    top: 1em;
+    text-align: center;
+    width: 100%;
+    left: 0;
+
+    select{
+        font-size: 18px;
+        font-family: Barlow;
+        padding: 1ex 2ex;
+        border-radius: 2ex;
+        border: 3px solid #0005;
+        font-weight: 800;
+        color: #0006;
+        background-color: transparent;
     }
 }
 
