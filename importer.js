@@ -1,101 +1,155 @@
 /**
- *  
- *  dark patterns importer
- * 
+ * dark patterns - taller de diseño de interacción e[ad] 2024
+ * Este código está diseñado para cargar y mostrar casos de estudio sobre patrones oscuros en diseño de interacción desde una API.
  */
 
+// URL de la API para obtener los casos de estudio específicos sobre patrones oscuros.
+let queryUrl = "https://wiki.ead.pucv.cl/api.php?action=ask&format=json&query=%5B%5BCategor%C3%ADa%3ACaso%20de%20Estudio%5D%5D%5B%5BPalabras%20Clave%3A%3Adark%5D%5D%20%7C%3FNombre%20%7C%3FURL%20%7C%3FDescripci%C3%B3n%20Corta%20%7C%3FDescripci%C3%B3n%20%7C%3FPalabras%20Clave%20%7C%3FImgPath%20%7C%3FImgPaths";
+let data; // Variable para almacenar los datos obtenidos de la API.
+let casos = []; // Arreglo para almacenar los objetos de cada caso de estudio.
 
-let queryUrl, data;
-let casos = [];
-
-// Función preload() de p5.js que se ejecuta antes de setup().
-// Se utiliza para cargar recursos externos, en este caso, datos JSON.
+// Función para cargar los datos JSON de la API utilizando JSONP para solicitudes de dominio cruzado.
 function preload() {
-    queryUrl =
-        "https://wiki.ead.pucv.cl/api.php?action=ask&format=json&query=%5B%5BCategor%C3%ADa%3ACaso%20de%20Estudio%5D%5D%5B%5BPalabras%20Clave%3A%3Adark%5D%5D%7C%3FNombre%7C%3FDescripci%C3%B3n%7C%3FURL%7C%3FImgPath&utf8=1"
-    data = loadJSON(queryUrl, gotData, "jsonp"); // Cargar datos JSON. Cuando esté listo, se llamará a gotData().
+  data = loadJSON(queryUrl, gotData, "jsonp");
 }
 
-// Función que se llama después de cargar el JSON.
+// Función llamada automáticamente después de que los datos JSON son cargados.
 function gotData() {
-    console.log(data); // Mostrar los datos en la consola para depuración.
-    constructObjects(); // Construir los objetos HTML a partir de los datos JSON.
+  console.log(data); // Imprimir datos para depuración.
+  constructObjects(); // Construir objetos con los datos obtenidos.
 }
 
-// Función setup() de p5.js que se ejecuta una vez al inicio.
+// Configuración inicial para p5.js, llamada una vez, configura la página sin un canvas.
 function setup() {
-    // No hay contenido aquí porque estamos construyendo los objetos en gotData().
+  noCanvas();
+  displayAll(); // Mostrar todos los casos de estudio.
 }
 
+// Crear objetos de casos de estudio basados en los datos cargados.
 function constructObjects() {
-    // Recorrer cada resultado en data.query.results.
-    for (let key in data.query.results) {
-      let caso = data.query.results[key]; // 'asig' es una variable temporal que se renueva por cada nodo de data.query.results
-  
-      // Extraer datos relevantes del objeto actual.
-      let casiopeaUrl = caso.fullurl; // link a la página en Casiopea
-  
-      // Verificar si existe la propiedad y si tiene elementos. De lo contrario, mostrar "No disponible".
+  for (let key in data.query.results) {
+    let caso = data.query.results[key];
+    let name = caso.printouts["Nombre"]?.join(", ") ?? "Nombre no disponible";
+    let shortDesc = caso.printouts["Descripción Corta"]?.join(", ") ?? "Descripción corta no disponible";
+    let desc = caso.printouts["Descripción"]?.join(", ") ?? "Descripción no disponible";
+    let keywords = caso.printouts["Palabras Clave"]?.join(", ") ?? "Palabras clave no disponibles";
+    let img = caso.printouts["ImgPath"]?.join(", ") ?? "https://loremflickr.com/640/360";
+    let imgs = caso.printouts["ImgPaths"]?.join(", ") ?? "https://loremflickr.com/640/360";
+    let url = caso.printouts["URL"]?.join(", ") ?? "URL no disponible";
+    let id = toCanonical(name); // Convertir nombre a formato canónico.
+    let casoNuevo = new Caso(name, id, shortDesc, desc, keywords, url, caso.fullurl, img, imgs);
+    casos.push(casoNuevo);
+  }
+  constructSelector(); // Construir el selector después de mostrar todos los casos.
+}
 
-      let name =
-      caso.printouts["Nombre"] && caso.printouts["Nombre"].length > 0
-        ? caso.printouts["Nombre"].join(", ")
-        : "Este caso no tiene ingresado un nombre en el formulario";
-      
-      let desc =
-        caso.printouts["Descripción"] && caso.printouts["Descripción"].length > 0
-          ? caso.printouts["Descripción"].join(", ")
-          : "No hay una descripción disponible ingresada en el formulario";
-  
-      let img =
-        caso.printouts["ImgPath"] &&
-        caso.printouts["ImgPath"].length > 0
-          ? caso.printouts["ImgPath"].join(", ")
-          : "https://loremflickr.com/640/360";
-  
-  
-      // creo un Caso de acuerdo a la clase definida más abajo (el caso está vacío en este minuto)
-      let casoNuevo = new Caso();
-      
-      // Ahora le asigno los calores que tengo copiados desde el JSON
-      casoNuevo.name = name;
-      casoNuevo.desc = desc;
-      casoNuevo.img = img;
-      casoNuevo.casiopeaURL = casiopeaUrl;
-
-  
-      // agrego la asignatura (temporal) al arreglo de asignaturas
-      casos.push(casoNuevo);
-
-      // lo registra en la consola para revisarlo con el inspector
-      console.log(casoNuevo); 
-  
-      // le digo que la despliegue
-      casoNuevo.display();
-    }
+// Clase para representar un caso de estudio.
+class Caso {
+  constructor(name, id, shortDesc, desc, keywords, url, casiopeaUrl, img, imgs) {
+    this.name = name;
+    this.id = id;
+    this.shortDesc = shortDesc;
+    this.desc = desc;
+    this.keywords = keywords;
+    this.img = img;
+    this.imgs = imgs;
+    this.casiopeaURL = casiopeaUrl;
+    this.url = url;
   }
 
-class Caso {
-    constructor() {
-        // inicializo el objeto con los atributos en blanco
-        this.name = "";
-        this.desc = "";
-        this.img = "";
-        this.casiopeaURL = "";
-    }
+  // Método para mostrar un caso en formato reducido.
+  displaySmall() {
+    let currentUrl = window.location.href.split('?')[0];
+    let urlWithParam = `${currentUrl}?id=${this.id}`;
+    let casoContainer = createDiv(
+      "<a href='#' onclick='event.preventDefault(); goToURL(\"" + urlWithParam + "\", \"" + this.id + "\");'>" +
+      "<img src='" + this.img + "' title='" + this.name + "' />" +
+      "<div class='overlay'>" +
+      "<h4>" + this.name + "</h4>" +
+      "<div class='desc'>" + this.shortDesc + "</div></div></a>"
+    );
+    casoContainer.class('caso');
+    casoContainer.parent('main');
+  }
 
-    display() {
+  // Método para mostrar detalles completos de un caso.
+  display() {
+    clearAll();
+    // agregar el título
+    let htmlTitle = document.getElementById('title');
+    htmlTitle.innerHTML = this.name;
 
-        let casoContainer = createDiv(
-            "<a href='"+this.casiopeaURL+"' >"+
-            "<img src='"+this.img+"' title='"+this.name+"' />"+
-            "<div class ='overlay'>"+
-            "<h4>"+this.name+"</h4>"+
-            "<div class='desc'>"+this.desc+"</div></div></a>"
-        );
-        // se le asigna la clase 'caso' al elemento contenedor
-        casoContainer.class('caso')
-        // define la ubicación en el documento html
-        casoContainer.parent('main');
-    }
+    // agregar el contenido
+    let singleContainer = createDiv(
+      "<img src='" + this.img + "' title='" + this.name + "' />" +
+      "<div class='desc'>" + this.desc + "<br><a href='" + this.casiopeaURL + "'>Link a Casiopea</a></div>"
+    );
+    singleContainer.class('single');
+    singleContainer.parent(document.getElementById('single'));
+  }
+}
+
+// Función para generar un selector y permitir la navegación entre casos.
+function constructSelector() {
+  let sel = createSelect();
+  sel.option("Selecciona un patrón oscuro");
+  casos.forEach(caso => {
+    sel.option(caso.name, caso.id);
+  });
+  sel.parent('footerSelect');
+  sel.changed(() => {
+    let selectedId = sel.value();
+    goToURL(window.location.href.split('?')[0] + "?id=" + selectedId, selectedId);
+  });
+}
+
+// Función para mostrar todos los casos en formato pequeño.
+function displayAll() {
+  clearAll();
+  let htmlTitle = document.getElementById('title');
+  htmlTitle.innerHTML = "Patrones Oscuros del Diseño de Interacción";
+  for (let caso of casos) {
+    caso.displaySmall();
+  }
+}
+
+// Funciones adicionales para manejar la visualización y navegación de casos.
+function displayCase(id) {
+  let mainContainer = document.querySelector('main');
+  mainContainer.innerHTML = '';
+  let selectedCaso = casos.find(caso => caso.id === id);
+  if (selectedCaso) {
+    document.title = selectedCaso.name + " - Dark Patterns";
+    selectedCaso.display();
+  }
+}
+
+function goToURL(url, id = null) {
+  if (id) {
+    history.pushState({id: id}, '', url);
+    displayCase(id);
+  } else {
+    const selectedId = sel.value();
+    const newUrl = window.location.href.split('?')[0] + "?id=" + selectedId;
+    history.pushState({id: selectedId}, '', newUrl);
+    displayCase(selectedId);
+  }
+}
+
+// Convertir nombres a permalinks, facilitando URLs amigables.
+function toCanonical(name) {
+  let canonical = name.toLowerCase();
+  const accentMap = {á: 'a', é: 'e', í: 'i', ó: 'o', ú: 'u', ü: 'u', ñ: 'n'};
+  canonical = canonical.replace(/[áéíóúüñ]/g, match => accentMap[match]);
+  canonical = canonical.replace(/\s+/g, '-');
+  canonical = canonical.replace(/[^a-z0-9-]/g, '');
+  return canonical;
+}
+
+// Limpiar todos los contenidos antes de cargar nuevos casos.
+function clearAll() {
+  let htmlTitle = document.getElementById('title');
+  htmlTitle.innerHTML = ''; // Limpiar el título del caso en la página.
+  let articleContainer = document.getElementById('single');
+  articleContainer.innerHTML = ''; // Limpiar el contenido del artículo antes de añadir nuevo contenido.
 }

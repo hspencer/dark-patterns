@@ -8,14 +8,17 @@ En la [Zona de Pruebas de la API](https://wiki.ead.pucv.cl/Especial:Zona_de_prue
 ```
 [[Categoría:Caso de Estudio]][[Palabras Clave::dark]]
 |?Nombre
-|?Descripción
 |?URL
+|?Descripción Corta
+|?Descripción
+|?Palabras Clave
 |?ImgPath
+|?ImgPaths
 ```
 
 para generar una URL que nos entrega un JSON:
 ```
-https://wiki.ead.pucv.cl/api.php?action=ask&format=json&query=%5B%5BCategor%C3%ADa%3ACaso%20de%20Estudio%5D%5D%5B%5BPalabras%20Clave%3A%3Adark%5D%5D%7C%3FNombre%7C%3FDescripci%C3%B3n%7C%3FURL%7C%3FImgPath&utf8=1
+https://wiki.ead.pucv.cl/api.php?action=ask&format=json&query=%5B%5BCategor%C3%ADa%3ACaso%20de%20Estudio%5D%5D%5B%5BPalabras%20Clave%3A%3Adark%5D%5D%20%7C%3FNombre%20%7C%3FURL%20%7C%3FDescripci%C3%B3n%20Corta%20%7C%3FDescripci%C3%B3n%20%7C%3FPalabras%20Clave%20%7C%3FImgPath%20%7C%3FImgPaths
 ```
 
 - El archivo [importer.js](importer.js) genera la consulta y construye el html. 

@@ -7,13 +7,13 @@ Cascada de Estilos
 @import url("https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Barlow:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,700&display=swap");
 body {
   margin: 1em auto;
-  background-color: rgb(248, 127, 6);
+  background-color: rgba(5, 13, 68, 0.886);
   width: calc(100% - 2em);
   max-width: 900px;
 }
 
 #p5_loading {
-  color: rgba(0, 0, 0, 0.2784313725);
+  color: rgb(0, 154, 250);
   width: 100%;
   text-align: center;
   display: flex;
@@ -23,38 +23,37 @@ body {
 }
 
 h2 {
-  color: rgba(0, 0, 0, 0.1333333333);
+  color: rgb(0, 154, 250);
   font-size: 5em;
   font-family: "Abril Fatface", serif;
   font-weight: 400;
   font-style: normal;
-  margin: 1em 0 0 0;
+  margin: 1em 0 0.5em 0;
+  line-height: 85%;
 }
 
 .container {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
   grid-gap: 1em;
 }
 
 .caso {
   position: relative;
   overflow: hidden;
-  background-color: rgba(0, 0, 0, 0.341);
-  height: 20em;
+  height: 15em;
   border-radius: 1ex;
+  border: 0.3ex solid rgba(255, 255, 255, 0.866);
 }
 .caso img {
-  width: 100%;
-  height: auto;
-  -o-object-fit: cover;
-     object-fit: cover;
+  -o-object-fit: fill;
+     object-fit: fill;
   transition: filter 0.5s, transform 0.5s;
   transform-origin: center;
 }
 .caso .overlay {
   position: absolute;
-  background-color: rgba(0, 0, 0, 0.3333333333);
+  background-color: rgba(13, 5, 63, 0.391);
   font-family: "Barlow", sans-serif;
   width: 100%;
   padding: 1em;
@@ -65,16 +64,16 @@ h2 {
   justify-content: flex-end;
   transition: transform 0.5s;
   transform: translateY(0);
-  color: white;
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.4);
+  color: rgba(255, 255, 255, 0.866);
+  text-shadow: 1px 1px 2px rgba(13, 5, 63, 0.391);
 }
 .caso .overlay h4 {
   position: absolute;
-  font-size: 1.5em;
+  font-size: 1.1em;
   font-weight: 700;
   text-transform: uppercase;
-  bottom: 1em;
-  width: calc(100% - 2em);
+  bottom: 2em;
+  width: calc(100% - 4em);
 }
 .caso .overlay .desc {
   font-size: 1.2em;
@@ -87,9 +86,6 @@ h2 {
   transform: scale(1.2);
   filter: brightness(50%);
 }
-.caso:hover .overlay {
-  transform: translateY(-50%);
-}
 
 .single {
   display: grid;
@@ -101,37 +97,23 @@ h2 {
   height: auto;
   margin: 1em 0;
   border-radius: 2ex;
+  border: 0.3ex solid rgba(255, 255, 255, 0.866);
 }
 .single .desc {
   margin: 1em 0;
   font-size: 1.2em;
-  color: rgba(0, 0, 0, 0.6);
+  color: rgba(255, 255, 255, 0.866);
   font-family: Barlow;
 }
-
-#nav {
-  position: absolute;
-  top: 1em;
-  text-align: center;
-  width: 100%;
-  left: 0;
-}
-#nav select {
-  font-size: 18px;
-  font-family: Barlow;
-  padding: 1ex 2ex;
-  border-radius: 2ex;
-  border: 3px solid rgba(0, 0, 0, 0.3333333333);
-  font-weight: 800;
-  color: rgba(0, 0, 0, 0.4);
-  background-color: transparent;
+.single a {
+  color: rgba(255, 255, 255, 0.866);
+  font-weight: bolder;
 }
 
 footer {
   padding: 2em;
   font-family: "Barlow", sans-serif;
-  font-weight: 800;
-  text-transform: uppercase;
+  text-transform: lowercase;
 }
 footer nav {
   display: flex;
@@ -140,15 +122,42 @@ footer nav {
 }
 footer nav li {
   display: inline;
+  margin: 1em;
 }
 footer nav li a {
   display: inline-block;
   text-decoration: none;
   padding: 1ex 2ex;
   border-radius: 2ex;
-  background-color: rgba(0, 0, 0, 0.3333333333);
+  background-color: rgba(13, 5, 63, 0.391);
   color: white;
 }
 footer nav li a:hover {
   background-color: black;
+}
+footer select {
+  font-size: 18px;
+  font-family: Barlow;
+  padding: 1ex 2ex;
+  border-radius: 2ex;
+  border: 3px solid rgba(255, 255, 255, 0.866);
+  font-weight: 800;
+  color: rgba(255, 255, 255, 0.866);
+  background-color: rgba(13, 5, 63, 0.391);
+  margin-top: 1em;
+}
+
+/************************** responsive: gracefull degradation **********************************/
+@media (max-width: 768px) and (min-width: 481px) {
+  .container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 480px) {
+  .container {
+    grid-template-columns: 1fr;
+  }
+  .single {
+    grid-template-columns: 1fr;
+  }
 }/*# sourceMappingURL=style.css.map */
