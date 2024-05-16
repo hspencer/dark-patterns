@@ -8,20 +8,41 @@ Cascada de Estilos
 
 // variables principales
 
-$color-bg: rgba(5, 13, 68, 0.886);
-$color-title: rgb(0, 154, 250);
-$color-text: rgba(255, 255, 255, 0.866);
-$color-overlay: rgba(13, 5, 63, 0.391);
+$color-bg: rgba(240, 237, 230, 0.886);
+$color-title: rgb(3, 108, 255);
+$color-text: rgb(3, 108, 255);
+$color-overlay: rgba(255, 218, 198, 0.659);
+$color-shadow: rgba(255, 81, 0, 0.17);
+
+
+// Variables para los breakpoints
+$phone-vertical: 480px; // Teléfonos en vertical
+$phone-horizontal: 768px; // Teléfonos en horizontal
+$desktop: 1024px; // Escritorio
+
 
 // google fonts
 @import url('https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Barlow:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,700&display=swap');
 
 
+/** mixin para sombras **/
+
+@mixin shadow-steps($num, $inc) {
+    $value: null; // Inicializa la cadena de sombras
+
+    @for $i from 1 through $num {
+        $value: #{$value},
+        #{$inc * $i} #{$inc * $i} 0 $color-shadow; // Concatena cada nueva sombra
+    }
+
+    box-shadow: $value; // Aplica todas las sombras acumuladas
+}
+
 body {
     margin: 1em auto;
     background-color: $color-bg;
     width: calc(100% - 2em);
-    max-width: 900px;
+    max-width: $desktop;
 }
 
 #p5_loading {
@@ -32,7 +53,7 @@ body {
     justify-content: center;
     font-size: 2em;
     font-family: "Abril Fatface", serif;
-  }
+}
 
 h2 {
     color: $color-title;
@@ -47,7 +68,7 @@ h2 {
 .container {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
-    grid-gap: 1em;
+    grid-gap: 2em;
 }
 
 .caso {
@@ -56,11 +77,13 @@ h2 {
     height: 15em;
     border-radius: 1ex;
     border: .3ex solid $color-text;
+    @include shadow-steps(8, 2px);
 
     img {
         object-fit: fill;
         transition: filter 0.5s, transform 0.5s;
-        transform-origin: center; // Centrar el zoom
+        object-position: center;
+        transform-origin: center;
     }
 
     .overlay {
@@ -87,6 +110,7 @@ h2 {
             bottom: 2em;
             width: calc(100% - 4em);
         }
+
         .desc {
             font-size: 1.2em;
             font-weight: 400;
@@ -104,61 +128,66 @@ h2 {
     }
 }
 
-.single{
+.single {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    grid-gap: 1em;
+    grid-gap: 2em;
 
-    img{
+    img {
         width: 100%;
         height: auto;
         margin: 1em 0;
         border-radius: 1ex;
         border: .3ex solid $color-text;
+        @include shadow-steps(8, 2px);
     }
 
-    .desc{
+    .desc {
         margin: 1em 0;
-        font-size: 1.2em;
-        color:$color-text;
+        font-size: 1.4em;
+        line-height: 1.2em;
+        color: $color-text;
         font-family: Barlow;
     }
 
-    a{
+    a {
         color: $color-text;
         font-weight: bolder;
     }
 }
 
-footer{
+footer {
 
     padding: 2em;
     font-family: "Barlow", sans-serif;
     text-transform: lowercase;
 
-    nav{
+    nav {
         display: flex;
-        flex-flow:row;
+        flex-flow: row;
         justify-content: space-between;
 
-        li{
+        li {
             display: inline;
             margin: 1em;
-            a{
+
+            a {
                 display: inline-block;
                 text-decoration: none;
                 padding: 1ex 2ex;
                 border-radius: 2ex;
                 background-color: $color-overlay;
-                color: white;
-                &:hover{
-                    background-color: black;
+                color: $color-text;
+                border: .3ex solid $color-text;
+
+                &:hover {
+                    background-color: transparentize($color-text, .7);
                 }
             }
         }
     }
 
-    select{
+    select {
         font-size: 18px;
         font-family: Barlow;
         padding: 1ex 2ex;
@@ -169,21 +198,13 @@ footer{
         background-color: $color-overlay;
         margin-top: 1em;
     }
-    
+
 }
 
 /************************** responsive: gracefull degradation **********************************/
 
-// Definir variables para los breakpoints
-$phone-vertical:   480px;   // Teléfonos en vertical
-$phone-horizontal: 768px;   // Teléfonos en horizontal
-$desktop:          1024px;  // Escritorio
-
-
 // Media query para teléfonos horizontales
 @media (max-width: $phone-horizontal) and (min-width: $phone-vertical + 1) {
-
-
     .container {
         grid-template-columns: repeat(2, 1fr); // 2 columnas para teléfono horizontal
     }
@@ -191,13 +212,11 @@ $desktop:          1024px;  // Escritorio
 
 // Media query para teléfonos verticales
 @media (max-width: $phone-vertical) {
-
-
     .container {
         grid-template-columns: 1fr; // 1 columna para teléfono vertical
     }
 
-    .single{
+    .single {
         grid-template-columns: 1fr;
     }
 }

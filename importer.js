@@ -83,7 +83,7 @@ class Caso {
     // agregar el contenido
     let singleContainer = createDiv(
       "<img src='" + this.img + "' title='" + this.name + "' />" +
-      "<div class='desc'>" + this.desc + "<br><br>"+this.keywords +"<br><br><a href='" + this.casiopeaURL + "'>Link a Casiopea</a></div>"
+      "<div class='desc'>" + this.desc + "<br><br><strong>Palabras Clave</strong>: "+this.keywords +"<br><br><a href='" + this.casiopeaURL + "'>Link a Casiopea</a></div>"
     );
     singleContainer.class('single');
     singleContainer.parent(document.getElementById('single'));
