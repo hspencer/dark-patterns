@@ -108,6 +108,7 @@ h2 {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   grid-gap: 1em;
+  margin-top: 1em;
 }
 .single .gallery img {
   box-shadow: none;
@@ -135,7 +136,7 @@ h2 {
 }
 .single a {
   color: rgb(3, 108, 255);
-  font-weight: bolder;
+  font-size: 0.9em;
 }
 
 footer {
