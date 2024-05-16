@@ -229,7 +229,6 @@ footer {
             font-weight: 800;
             color: $color-text;
             background-color: $color-overlay;
-
         }
     }
 }
@@ -237,9 +236,13 @@ footer {
 /************************** responsive: gracefull degradation **********************************/
 
 // Media query para teléfonos horizontales
-@media (max-width: $phone-horizontal) and (min-width: $phone-vertical + 1) {
+@media (max-width: $phone-horizontal) and (min-width: ($phone-vertical + 1)) {
     .container {
-        grid-template-columns: repeat(2, 1fr); // 2 columnas para teléfono horizontal
+        grid-template-columns: repeat(3, 1fr); // 2 columnas para teléfono horizontal
+    }
+    .single {
+        grid-template-columns: 1fr;
+        grid-gap: 0;
     }
 }
 

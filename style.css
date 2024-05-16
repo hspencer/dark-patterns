@@ -183,7 +183,11 @@ footer #footerSelect select {
 /************************** responsive: gracefull degradation **********************************/
 @media (max-width: 768px) and (min-width: 481px) {
   .container {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .single {
+    grid-template-columns: 1fr;
+    grid-gap: 0;
   }
 }
 @media (max-width: 480px) {
