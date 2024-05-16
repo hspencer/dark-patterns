@@ -72,22 +72,53 @@ class Caso {
     casoContainer.parent('main');
   }
 
-  // Método para mostrar detalles completos de un caso.
-  display() {
-    clearAll();
-    // agregar el título
-    let htmlTitle = document.getElementById('title');
-    htmlTitle.innerHTML = this.name;
+// Método para mostrar detalles completos de un caso.
+display() {
+  clearAll(); // Limpia todos los contenidos antes de mostrar nuevos datos.
 
+  // Agregar el título
+  let htmlTitle = document.getElementById('title');
+  htmlTitle.innerHTML = this.name;
 
-    // agregar el contenido
-    let singleContainer = createDiv(
-      "<img src='" + this.img + "' title='" + this.name + "' />" +
-      "<div class='desc'>" + this.desc + "<br><br><strong>Palabras Clave</strong>: "+this.keywords +"<br><br><a href='" + this.casiopeaURL + "'>Link a Casiopea</a></div>"
-    );
-    singleContainer.class('single');
-    singleContainer.parent(document.getElementById('single'));
+  // Comienza a construir el contenido HTML
+  let htmlContent = `<img src='${this.img}' title='${this.name}' />` +
+                    `<div class='desc'>${this.desc}<br><br><strong>Palabras Clave</strong>: ${this.keywords}<br><br>`;
+
+// Agregar enlaces de URLs
+const urls = this.url.split(", "); // Divide las URLs independientemente de si hay una o varias
+let urlsHtml = ''; // Inicializa un string vacío para construir el HTML de enlaces.
+
+urls.forEach(url => {
+  urlsHtml += `<a href='${url.trim()}'>${url.trim()}</a><br>`; // Agrega cada URL como un enlace.
+});
+
+// Agregar imágenes extra dentro de un div.gallery si hay imágenes disponibles
+let imgsHtml = ''; // Inicializa un string vacío para construir el HTML de imágenes.
+
+if (this.imgs && this.imgs.trim() !== "") { // Verifica que la variable imgs contiene algo antes de proceder
+  const imgsArray = this.imgs.split(", "); // Divide las imágenes en un array
+  imgsArray.forEach(img => {
+    imgsHtml += `<img src='${img.trim()}' alt='Imagen adicional para ${this.name}' />`;
+  });
+
+  // Si imgsHtml tiene contenido después de procesar las imágenes, envolver en div.gallery
+  if (imgsHtml) {
+    imgsHtml = `<div class='gallery'>${imgsHtml}</div>`; // Envuelve las imágenes en un contenedor gallery si hay alguna imagen
   }
+}
+// Agregar el HTML de imágenes al contenido principal, solo si imgsHtml no está vacío
+if (imgsHtml) {
+  htmlContent += imgsHtml; // Agrega el contenedor gallery solo si hay imágenes
+}
+
+  // Continuar construyendo el contenido HTML
+  htmlContent += `<a class='wiki-link' href='${this.casiopeaURL}'>Link a Casiopea</a></div>`;
+
+  // Asignar el contenido HTML al contenedor y ajustar la clase
+  let singleContainer = createDiv(htmlContent);
+  singleContainer.class('single');
+  singleContainer.parent(document.getElementById('single'));
+}
 }
 
 // Función para generar un selector y permitir la navegación entre casos.
