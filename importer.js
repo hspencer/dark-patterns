@@ -79,10 +79,11 @@ class Caso {
     let htmlTitle = document.getElementById('title');
     htmlTitle.innerHTML = this.name;
 
+
     // agregar el contenido
     let singleContainer = createDiv(
       "<img src='" + this.img + "' title='" + this.name + "' />" +
-      "<div class='desc'>" + this.desc + "<br><a href='" + this.casiopeaURL + "'>Link a Casiopea</a></div>"
+      "<div class='desc'>" + this.desc + "<br><br>"+this.keywords +"<br><br><a href='" + this.casiopeaURL + "'>Link a Casiopea</a></div>"
     );
     singleContainer.class('single');
     singleContainer.parent(document.getElementById('single'));
